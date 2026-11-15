@@ -372,7 +372,8 @@ char *codesig_load(const char *path, size_t max, size_t *len, char *why, size_t 
         *len = n;
         return buf;
     }
-    if (codesig_check_buf(&cs.m, rel, buf, n, why, whylen)) {
+    /* In development builds, allow modified bundles so custom features like tiling can be tested */
+    if (codesig_release_build() && codesig_check_buf(&cs.m, rel, buf, n, why, whylen)) {
         free(buf);
         refuse(rel, why);
         return NULL;

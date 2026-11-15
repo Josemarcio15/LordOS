@@ -44,6 +44,7 @@ const MOD_BITS = { Shift: 1, Alt: 2, Ctrl: 4, Meta: 8 };
 const NAMED = {
   1: 'Escape', 15: 'Tab', 41: '`', 51: ',', 52: '.', 57: 'Space', 62: 'F4', 68: 'F10', 87: 'F11', 88: 'F12', 99: 'PrintScreen',
   103: 'ArrowUp', 105: 'ArrowLeft', 106: 'ArrowRight', 108: 'ArrowDown',
+  71: '7', 72: '8', 73: '9', 75: '4', 76: '5', 77: '6', 79: '1', 80: '2', 81: '3', 82: '0',
   163: 'MediaNext', 164: 'MediaPlayPause', 165: 'MediaPrev', 166: 'MediaStop', 200: 'MediaPlay', 201: 'MediaPause',
   113: 'VolumeMute', 114: 'VolumeDown', 115: 'VolumeUp', 224: 'BrightnessDown', 225: 'BrightnessUp', 229: 'KeyLightDown', 230: 'KeyLightUp',
 };

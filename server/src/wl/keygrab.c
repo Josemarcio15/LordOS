@@ -25,6 +25,23 @@ static const Grab flow[] = {
     { KG_META | KG_ALT, 'd', 0, KG_TAKE },
     { KG_META, 0, KEY_COMMA, KG_TAKE },
     { KG_META | KG_CTRL, 0, KEY_LEFT, KG_TAKE }, { KG_META | KG_CTRL, 0, KEY_RIGHT, KG_TAKE },
+    /* Tiling: Numpad 0..9 and top row 0..9 with Ctrl+Alt or Meta */
+    { KG_CTRL | KG_ALT, 0, KEY_KP0, KG_TAKE }, { KG_CTRL | KG_ALT, 0, KEY_KP1, KG_TAKE }, { KG_CTRL | KG_ALT, 0, KEY_KP2, KG_TAKE },
+    { KG_CTRL | KG_ALT, 0, KEY_KP3, KG_TAKE }, { KG_CTRL | KG_ALT, 0, KEY_KP4, KG_TAKE }, { KG_CTRL | KG_ALT, 0, KEY_KP5, KG_TAKE },
+    { KG_CTRL | KG_ALT, 0, KEY_KP6, KG_TAKE }, { KG_CTRL | KG_ALT, 0, KEY_KP7, KG_TAKE }, { KG_CTRL | KG_ALT, 0, KEY_KP8, KG_TAKE },
+    { KG_CTRL | KG_ALT, 0, KEY_KP9, KG_TAKE },
+    { KG_CTRL | KG_ALT, 0, KEY_0, KG_TAKE }, { KG_CTRL | KG_ALT, 0, KEY_1, KG_TAKE }, { KG_CTRL | KG_ALT, 0, KEY_2, KG_TAKE },
+    { KG_CTRL | KG_ALT, 0, KEY_3, KG_TAKE }, { KG_CTRL | KG_ALT, 0, KEY_4, KG_TAKE }, { KG_CTRL | KG_ALT, 0, KEY_5, KG_TAKE },
+    { KG_CTRL | KG_ALT, 0, KEY_6, KG_TAKE }, { KG_CTRL | KG_ALT, 0, KEY_7, KG_TAKE }, { KG_CTRL | KG_ALT, 0, KEY_8, KG_TAKE },
+    { KG_CTRL | KG_ALT, 0, KEY_9, KG_TAKE },
+    { KG_META, 0, KEY_0, KG_TAKE }, { KG_META, 0, KEY_1, KG_TAKE }, { KG_META, 0, KEY_2, KG_TAKE },
+    { KG_META, 0, KEY_3, KG_TAKE }, { KG_META, 0, KEY_4, KG_TAKE }, { KG_META, 0, KEY_5, KG_TAKE },
+    { KG_META, 0, KEY_6, KG_TAKE }, { KG_META, 0, KEY_7, KG_TAKE }, { KG_META, 0, KEY_8, KG_TAKE },
+    { KG_META, 0, KEY_9, KG_TAKE },
+    { KG_META, 0, KEY_KP0, KG_TAKE }, { KG_META, 0, KEY_KP1, KG_TAKE }, { KG_META, 0, KEY_KP2, KG_TAKE },
+    { KG_META, 0, KEY_KP3, KG_TAKE }, { KG_META, 0, KEY_KP4, KG_TAKE }, { KG_META, 0, KEY_KP5, KG_TAKE },
+    { KG_META, 0, KEY_KP6, KG_TAKE }, { KG_META, 0, KEY_KP7, KG_TAKE }, { KG_META, 0, KEY_KP8, KG_TAKE },
+    { KG_META, 0, KEY_KP9, KG_TAKE },
 };
 
 /* Lord Flow with Settings → Keyboard's Desktops arrows on (the default): ⌃ arrows are word movement in
@@ -40,6 +57,23 @@ static const Grab flow_desktops[] = {
     { KG_META | KG_CTRL, 0, KEY_LEFT, KG_TAKE }, { KG_META | KG_CTRL, 0, KEY_RIGHT, KG_TAKE },
     { KG_CTRL, 0, KEY_LEFT, KG_TAKE }, { KG_CTRL, 0, KEY_RIGHT, KG_TAKE },
     { KG_CTRL, 0, KEY_UP, KG_TAKE }, { KG_CTRL, 0, KEY_DOWN, KG_TAKE },
+    /* Tiling: Numpad 0..9 and top row 0..9 with Ctrl+Alt or Meta */
+    { KG_CTRL | KG_ALT, 0, KEY_KP0, KG_TAKE }, { KG_CTRL | KG_ALT, 0, KEY_KP1, KG_TAKE }, { KG_CTRL | KG_ALT, 0, KEY_KP2, KG_TAKE },
+    { KG_CTRL | KG_ALT, 0, KEY_KP3, KG_TAKE }, { KG_CTRL | KG_ALT, 0, KEY_KP4, KG_TAKE }, { KG_CTRL | KG_ALT, 0, KEY_KP5, KG_TAKE },
+    { KG_CTRL | KG_ALT, 0, KEY_KP6, KG_TAKE }, { KG_CTRL | KG_ALT, 0, KEY_KP7, KG_TAKE }, { KG_CTRL | KG_ALT, 0, KEY_KP8, KG_TAKE },
+    { KG_CTRL | KG_ALT, 0, KEY_KP9, KG_TAKE },
+    { KG_CTRL | KG_ALT, 0, KEY_0, KG_TAKE }, { KG_CTRL | KG_ALT, 0, KEY_1, KG_TAKE }, { KG_CTRL | KG_ALT, 0, KEY_2, KG_TAKE },
+    { KG_CTRL | KG_ALT, 0, KEY_3, KG_TAKE }, { KG_CTRL | KG_ALT, 0, KEY_4, KG_TAKE }, { KG_CTRL | KG_ALT, 0, KEY_5, KG_TAKE },
+    { KG_CTRL | KG_ALT, 0, KEY_6, KG_TAKE }, { KG_CTRL | KG_ALT, 0, KEY_7, KG_TAKE }, { KG_CTRL | KG_ALT, 0, KEY_8, KG_TAKE },
+    { KG_CTRL | KG_ALT, 0, KEY_9, KG_TAKE },
+    { KG_META, 0, KEY_0, KG_TAKE }, { KG_META, 0, KEY_1, KG_TAKE }, { KG_META, 0, KEY_2, KG_TAKE },
+    { KG_META, 0, KEY_3, KG_TAKE }, { KG_META, 0, KEY_4, KG_TAKE }, { KG_META, 0, KEY_5, KG_TAKE },
+    { KG_META, 0, KEY_6, KG_TAKE }, { KG_META, 0, KEY_7, KG_TAKE }, { KG_META, 0, KEY_8, KG_TAKE },
+    { KG_META, 0, KEY_9, KG_TAKE },
+    { KG_META, 0, KEY_KP0, KG_TAKE }, { KG_META, 0, KEY_KP1, KG_TAKE }, { KG_META, 0, KEY_KP2, KG_TAKE },
+    { KG_META, 0, KEY_KP3, KG_TAKE }, { KG_META, 0, KEY_KP4, KG_TAKE }, { KG_META, 0, KEY_KP5, KG_TAKE },
+    { KG_META, 0, KEY_KP6, KG_TAKE }, { KG_META, 0, KEY_KP7, KG_TAKE }, { KG_META, 0, KEY_KP8, KG_TAKE },
+    { KG_META, 0, KEY_KP9, KG_TAKE },
 };
 
 static const Grab classic[] = {
@@ -47,6 +81,8 @@ static const Grab classic[] = {
     { KG_ALT | KG_SHIFT, 0, KEY_TAB, KG_HOLD },
     { KG_ALT, 0, KEY_F4, KG_TAKE },
     { KG_CTRL | KG_SHIFT, 0, KEY_ESC, KG_TAKE },
+    { KG_CTRL | KG_ALT, 0, KEY_KP1, KG_TAKE }, { KG_CTRL | KG_ALT, 0, KEY_KP2, KG_TAKE }, { KG_CTRL | KG_ALT, 0, KEY_KP3, KG_TAKE },
+    { KG_CTRL | KG_ALT, 0, KEY_1, KG_TAKE }, { KG_CTRL | KG_ALT, 0, KEY_2, KG_TAKE }, { KG_CTRL | KG_ALT, 0, KEY_3, KG_TAKE },
     { KG_META, 'a', 0, KG_TAKE },
     { KG_META, 'n', 0, KG_TAKE },
     { KG_META, 'd', 0, KG_TAKE },

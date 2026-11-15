@@ -30,6 +30,7 @@ const NAMES = {
   43: '\\', 51: ',', 52: '.', 53: '/', 70: 'ScrollLock', 99: 'PrintScreen', 102: 'Home', 103: 'ArrowUp', 104: 'PageUp',
   105: 'ArrowLeft', 106: 'ArrowRight', 107: 'End', 108: 'ArrowDown', 109: 'PageDown', 110: 'Insert', 111: 'Delete', 119: 'Pause',
   11: '0', 87: 'F11', 88: 'F12',
+  71: '7', 72: '8', 73: '9', 74: '-', 75: '4', 76: '5', 77: '6', 78: '+', 79: '1', 80: '2', 81: '3', 82: '0', 83: '.', 96: 'Enter', 98: '/',
 };
 for (let d = 1; d <= 9; d++) NAMES[d + 1] = String(d);
 for (let f = 1; f <= 10; f++) NAMES[58 + f] = `F${f}`;

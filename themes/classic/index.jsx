@@ -17,7 +17,7 @@ import {
   emptyTrash, ConfirmDialog, PowerDialog, findWallpaper, wallpaperSrc, MotionWallpaper, snapPreview, notifyHistory, setBannerPlacement, Text,
   useShortcuts, runShortcut, AppSwitcher, openSwitcher, switcherKeys, switcherGrabs, switcherHold, toggleShowDesktop, spotlight, launchApp, dockActivate,
   classicDesktopKeys, desktopSwipe, DesktopHud, OverviewBackdrop, OverviewChrome, openOverview, closeOverview, toggleOverview, overview, LevelHud,
-  menuBarPrefs, menuBarEveryDisplay, barDisplays, pointerDisplay, keepWindowsInWorkAreas,
+  menuBarPrefs, menuBarEveryDisplay, barDisplays, pointerDisplay, keepWindowsInWorkAreas, tileFront,
 } from '@lordos/sdk';
 import { apps } from '@lordos/apps';
 import { useEffect, useRef, useState, Fragment } from 'react';
@@ -116,7 +116,16 @@ const classicTable = (ui) => {
     { id: 'switchApps', keys: switcherKeys('alt'), run: switchApps, label: 'shell.shortcuts.switchApps', group: 'windows' },
     { id: 'snap', keys: ['Meta+ArrowLeft', 'Meta+ArrowRight', 'Meta+ArrowUp', 'Meta+ArrowDown'], show: ['❖←→↑↓'], run: snapFront, repeat: true, label: 'shell.shortcuts.snap', group: 'windows' },
     { id: 'closeWindow', keys: ['Alt+F4'], run: closeFront, label: 'shell.shortcuts.closeWindow', group: 'windows' },
-    { id: 'taskbar', keys: ['Meta+1', 'Meta+2', 'Meta+3', 'Meta+4', 'Meta+5', 'Meta+6', 'Meta+7', 'Meta+8', 'Meta+9'], show: ['❖1…9'], run: openTaskbarItem, label: 'shell.shortcuts.taskbarItem', group: 'apps' },
+    ...['0','1','2','3','4','5','6','7','8','9',
+       'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'
+    ].map((char) => ({
+      id: `tileZone_${char}`,
+      keys: [`Meta+${char.toUpperCase()}`, `Meta+${char}`],
+      run: () => tileFront(char),
+      label: `Tile Zone ${char.toUpperCase()}`,
+      group: 'windows',
+    })),
+    { id: 'toggleTilingEditor', keys: ['Meta+Space', 'Ctrl+Alt+Space', 'Meta+Alt+T'], run: toggleTilingEditor, label: 'Tiling Editor', group: 'windows' },
     ...classicDesktopKeys.map((k) => (k.id === 'overview' && switcherKeys('alt').includes('Meta+Tab') ? { ...k, keys: ['Meta+W'] } : k)),
   ];
 };

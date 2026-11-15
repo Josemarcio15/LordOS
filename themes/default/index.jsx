@@ -9,6 +9,7 @@ import {
   findWallpaper, wallpaperSrc, MotionWallpaper, useShortcuts, AppSwitcher, openSwitcher, switcherKeys, switcherGrabs, switcherHold, cycleAppWindows, hideApp, hideOthers,
   toggleShowDesktop, appSettingsItem, flowDesktopKeys, flowGrabs, desktopSwipe, DesktopHud, OverviewBackdrop, OverviewChrome,
   openOverview, closeOverview, toggleOverview, LevelHud, useStore, notifyHistory, menuBarEveryDisplay, hasBar, displayAt, keepWindowsInWorkAreas,
+  tileFront, toggleTilingEditor, TilingEditorOverlay,
 } from '@lordos/sdk';
 import { apps } from '@lordos/apps';
 import { useEffect, useRef, useState } from 'react';
@@ -98,6 +99,16 @@ const flowTable = (toggleLauncher) => [
   { id: 'hideOthers', keys: ['Meta+Alt+H'], run: hideOtherApps, label: 'shell.shortcuts.hideOthers', group: 'windows' },
   { id: 'forceQuit', keys: ['Meta+Alt+Escape'], run: openForceQuit, label: 'shell.shortcuts.forceQuit', group: 'apps' },
   { id: 'appSettings', keys: ['Meta+,'], run: openFrontSettings, when: frontSettings, label: 'shell.shortcuts.appSettings', group: 'apps' },
+  ...['0','1','2','3','4','5','6','7','8','9',
+     'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'
+  ].map((char) => ({
+    id: `tileZone_${char}`,
+    keys: [`Meta+${char.toUpperCase()}`, `Meta+${char}`],
+    run: () => tileFront(char),
+    label: `Tile Zone ${char.toUpperCase()}`,
+    group: 'windows',
+  })),
+  { id: 'toggleTilingEditor', keys: ['Meta+Space', 'Ctrl+Alt+Space', 'Meta+Alt+T'], run: toggleTilingEditor, label: 'Tiling Editor', group: 'windows' },
   ...flowDesktopKeys,
 ];
 
@@ -223,6 +234,7 @@ function App() {
           ]} />
         )}
         {launchpad && <Layer name="overlay"><Launchpad t={t} apps={launcherApps} onOpen={launchApp} onClose={() => setLaunchpad(false)} area={main} /></Layer>}
+        <Layer name="modal"><TilingEditorOverlay /></Layer>
       </View>
     </ThemeProvider>
   );

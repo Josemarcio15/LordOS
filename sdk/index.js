@@ -359,3 +359,5 @@ export { lordosWallpapers, userWallpaperName, wallpaperSrc, wallpaperThumb, find
 export { appGroup, appMenuItems, runningApps, forceQuit, recentItems, storeUpdates, hideApp, hideOthers, toggleShowDesktop, appSettingsItem, webHelpItems } from './appcontrol.js';
 export { windowMenuItems, moveResizeItems } from './windowmenu.js';
 export { setDesktopCount } from './desktops.js';
+export { tileFront, tileActiveWindows3Columns, toggleTilingEditor, setActiveLayout, saveLayout, deleteLayout, tilingStore } from './tiling.js';
+export { TilingEditorOverlay } from './tilingui.jsx';

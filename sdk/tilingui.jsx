@@ -2,7 +2,7 @@
 // Allows creating, dragging, resizing, and assigning keys (0-9, A-Z) to tiling zones.
 
 import { useState, useRef, useEffect } from 'react';
-import { View, Text, useStore, pointerWorkArea, addListener, ScrollView } from '@lordos/sdk';
+import { View, Text, useStore, pointerWorkArea, addListener, ScrollView, TextInput } from '@lordos/sdk';
 import { tilingStore, setActiveLayout, saveLayout, deleteLayout, toggleTilingEditor } from './tiling.js';
 
 const AVAILABLE_KEYS = [
@@ -18,6 +18,7 @@ export function TilingEditorOverlay() {
   const [zones, setZones] = useState([]);
   const [selectedZoneId, setSelectedZoneId] = useState(null);
   const [layoutName, setLayoutName] = useState('');
+  const [isEditingName, setIsEditingName] = useState(false);
 
   const dragRef = useRef(null);
   const canvasRef = useRef(null);
@@ -28,6 +29,7 @@ export function TilingEditorOverlay() {
     if (l) {
       setZones(JSON.parse(JSON.stringify(l.zones)));
       setLayoutName(l.name);
+      setIsEditingName(false);
       setSelectedZoneId(null);
     }
   }, [selectedLayoutId, state.editorOpen]);
@@ -180,11 +182,76 @@ export function TilingEditorOverlay() {
         zIndex: 9999,
       }}
     >
-      {/* Top Header */}
-      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 16, marginBottom: 12 }}>
-        <Text style={{ color: '#ffffff', fontSize: 18, fontWeight: '700' }}>
-          Editor de Quadrantes • Arraste para mover • Puxe o canto para redimensionar
-        </Text>
+      {/* Top Header: Título com Nome do Layout Editável e Dicas */}
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          width: canvasW,
+          marginBottom: 12,
+        }}
+      >
+        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
+          {isEditingName ? (
+            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+              <TextInput
+                value={layoutName}
+                onChange={setLayoutName}
+                autoFocus={true}
+                onSubmit={() => setIsEditingName(false)}
+                onCancel={() => setIsEditingName(false)}
+                style={{
+                  width: 200,
+                  height: 32,
+                  fontSize: 16,
+                  fontWeight: '700',
+                  color: '#ffffff',
+                  backgroundColor: '#28282a',
+                  borderRadius: 6,
+                  paddingHorizontal: 8,
+                }}
+              />
+              <View
+                onClick={() => setIsEditingName(false)}
+                style={{
+                  paddingVertical: 5,
+                  paddingHorizontal: 10,
+                  backgroundColor: '#30d158',
+                  borderRadius: 6,
+                  cursor: 'pointer',
+                }}
+              >
+                <Text style={{ color: '#ffffff', fontSize: 12, fontWeight: '700' }}>OK</Text>
+              </View>
+            </View>
+          ) : (
+            <View
+              onClick={() => setIsEditingName(true)}
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                gap: 8,
+                backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                paddingVertical: 5,
+                paddingHorizontal: 12,
+                borderRadius: 8,
+                cursor: 'pointer',
+              }}
+            >
+              <Text style={{ color: '#ffffff', fontSize: 18, fontWeight: '700' }}>
+                {layoutName || 'Layout Sem Nome'}
+              </Text>
+              <Text style={{ color: '#0a84ff', fontSize: 16 }} title="Clique para renomear">
+                ✎
+              </Text>
+            </View>
+          )}
+
+          <Text style={{ color: '#8e8e93', fontSize: 13, marginLeft: 8 }}>
+            Arraste para mover • Puxe o canto para redimensionar
+          </Text>
+        </View>
       </View>
 
       {/* Main Interactive Screen Canvas */}

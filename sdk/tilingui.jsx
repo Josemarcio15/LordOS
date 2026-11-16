@@ -74,10 +74,16 @@ export function TilingEditorOverlay() {
 
     const offMove = addListener('pointermove', onMove);
     const offUp = addListener('pointerup', onUp);
+    const offKey = addListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        toggleTilingEditor();
+      }
+    });
 
     return () => {
       offMove();
       offUp();
+      offKey();
     };
   }, [state.editorOpen]);
 
@@ -390,12 +396,12 @@ export function TilingEditorOverlay() {
         )}
       </View>
 
-      {/* Bottom Footer Bar: Layout Selector & Save Bar */}
+      {/* Card Exclusivo dos Layouts Criados com Scroll Centralizado */}
       <View
         style={{
           flexDirection: 'row',
           alignItems: 'center',
-          justifyContent: 'space-between',
+          justifyContent: 'center',
           marginTop: 14,
           backgroundColor: '#18181a',
           paddingVertical: 10,
@@ -406,90 +412,102 @@ export function TilingEditorOverlay() {
           width: canvasW,
           boxSizing: 'border-box',
           overflow: 'hidden',
-          gap: 16,
+          gap: 12,
         }}
       >
-        {/* Esquerda: Lista de Layouts com Scroll Horizontal (limitado para até ~6 itens visíveis) */}
-        <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1, minWidth: 0, gap: 10 }}>
-          <Text style={{ color: '#8e8e93', fontSize: 13, fontWeight: '600', flexShrink: 0 }}>Layouts:</Text>
+        <Text style={{ color: '#8e8e93', fontSize: 13, fontWeight: '600', flexShrink: 0 }}>Layouts:</Text>
 
-          <View style={{ flex: 1, minWidth: 0, height: 42 }}>
-            <ScrollView
-              horizontal={true}
-              style={{ flex: 1 }}
-              contentStyle={{ flexDirection: 'row', alignItems: 'center', gap: 8, paddingVertical: 2 }}
-            >
-              {Object.entries(state.layouts).map(([id, layout]) => {
-                const isSelected = selectedLayoutId === id;
-                const isDefault = id === '3-columns' || id === 'quarters' || id === 'focus-code';
-                return (
-                  <View
-                    key={id}
-                    onClick={() => setSelectedLayoutId(id)}
-                    style={{
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      gap: 6,
-                      paddingVertical: 6,
-                      paddingHorizontal: 12,
-                      borderRadius: 8,
-                      backgroundColor: isSelected ? '#0a84ff' : '#28282a',
-                      cursor: 'pointer',
-                      flexShrink: 0,
-                    }}
-                  >
-                    <Text style={{ color: '#ffffff', fontSize: 13, fontWeight: isSelected ? '700' : '400' }}>
-                      {layout.name}
-                    </Text>
-                    {!isDefault && (
-                      <View
-                        onClick={(e) => handleDeleteLayout(e, id)}
-                        title="Excluir este layout"
-                        style={{
-                          paddingHorizontal: 4,
-                          paddingVertical: 1,
-                          borderRadius: 4,
-                          backgroundColor: isSelected ? 'rgba(0,0,0,0.3)' : 'rgba(255,255,255,0.1)',
-                          cursor: 'pointer',
-                        }}
-                      >
-                        <Text style={{ color: '#ff453a', fontSize: 11, fontWeight: '800' }}>✕</Text>
-                      </View>
-                    )}
-                  </View>
-                );
-              })}
-            </ScrollView>
-          </View>
+        <View style={{ flex: 1, minWidth: 0, height: 42, justifyContent: 'center' }}>
+          <ScrollView
+            horizontal={true}
+            style={{ flex: 1 }}
+            contentStyle={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: 8,
+              paddingVertical: 2,
+            }}
+          >
+            {Object.entries(state.layouts).map(([id, layout]) => {
+              const isSelected = selectedLayoutId === id;
+              const isDefault = id === '3-columns' || id === 'quarters' || id === 'focus-code';
+              return (
+                <View
+                  key={id}
+                  onClick={() => setSelectedLayoutId(id)}
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    gap: 6,
+                    paddingVertical: 6,
+                    paddingHorizontal: 12,
+                    borderRadius: 8,
+                    backgroundColor: isSelected ? '#0a84ff' : '#28282a',
+                    cursor: 'pointer',
+                    flexShrink: 0,
+                  }}
+                >
+                  <Text style={{ color: '#ffffff', fontSize: 13, fontWeight: isSelected ? '700' : '400' }}>
+                    {layout.name}
+                  </Text>
+                  {!isDefault && (
+                    <View
+                      onClick={(e) => handleDeleteLayout(e, id)}
+                      title="Excluir este layout"
+                      style={{
+                        paddingHorizontal: 4,
+                        paddingVertical: 1,
+                        borderRadius: 4,
+                        backgroundColor: isSelected ? 'rgba(0,0,0,0.3)' : 'rgba(255,255,255,0.1)',
+                        cursor: 'pointer',
+                      }}
+                    >
+                      <Text style={{ color: '#ff453a', fontSize: 11, fontWeight: '800' }}>✕</Text>
+                    </View>
+                  )}
+                </View>
+              );
+            })}
+          </ScrollView>
+        </View>
+      </View>
+
+      {/* Linha Abaixo: Apenas Ações (Salvar e Fechar) */}
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'flex-end',
+          width: canvasW,
+          marginTop: 12,
+          gap: 12,
+        }}
+      >
+        <View
+          onClick={handleApply}
+          style={{
+            paddingVertical: 8,
+            paddingHorizontal: 24,
+            borderRadius: 8,
+            backgroundColor: '#30d158',
+            cursor: 'pointer',
+          }}
+        >
+          <Text style={{ color: '#ffffff', fontWeight: '700', fontSize: 13 }}>Salvar</Text>
         </View>
 
-        {/* Direita: Ações Salvar e Fechar sempre visíveis e fixos */}
-        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10, flexShrink: 0 }}>
-          <View
-            onClick={handleApply}
-            style={{
-              paddingVertical: 8,
-              paddingHorizontal: 18,
-              borderRadius: 8,
-              backgroundColor: '#30d158',
-              cursor: 'pointer',
-            }}
-          >
-            <Text style={{ color: '#ffffff', fontWeight: '700', fontSize: 13 }}>Salvar e Aplicar</Text>
-          </View>
-
-          <View
-            onClick={toggleTilingEditor}
-            style={{
-              paddingVertical: 8,
-              paddingHorizontal: 16,
-              borderRadius: 8,
-              backgroundColor: '#3a3a3c',
-              cursor: 'pointer',
-            }}
-          >
-            <Text style={{ color: '#ffffff', fontSize: 13 }}>Fechar</Text>
-          </View>
+        <View
+          onClick={toggleTilingEditor}
+          style={{
+            paddingVertical: 8,
+            paddingHorizontal: 18,
+            borderRadius: 8,
+            backgroundColor: '#3a3a3c',
+            cursor: 'pointer',
+          }}
+        >
+          <Text style={{ color: '#ffffff', fontSize: 13 }}>Fechar</Text>
         </View>
       </View>
     </View>

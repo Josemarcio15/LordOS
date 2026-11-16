@@ -82,9 +82,10 @@ export function TilingEditorOverlay() {
   if (!state.editorOpen) return null;
 
   const area = pointerWorkArea();
-  // Adjust canvas size so there's plenty of breathing room for controls below
-  const canvasW = Math.min(840, area.w - 80);
-  const canvasH = Math.min(380, Math.max(260, area.h - 320));
+  // Calcule dinamicamente a largura máxima para caber todos os botões e layouts sem vazar
+  const maxW = Math.min(940, area.w - 60);
+  const canvasW = maxW;
+  const canvasH = Math.min(380, Math.max(250, area.h - 340));
 
   const startDrag = (zone, e, type) => {
     e.stopPropagation?.();
@@ -313,32 +314,34 @@ export function TilingEditorOverlay() {
         )}
       </View>
 
-      {/* Bottom Footer Bar: Layout Switcher & Save (Completamente Separada e com Espaçamento Amplo) */}
+      {/* Bottom Footer Bar: Layout Switcher & Save (Dinâmico, Flexível e Auto-ajustável) */}
       <View
         style={{
           flexDirection: 'row',
+          flexWrap: 'wrap',
           gap: 12,
-          marginTop: 16,
+          marginTop: 14,
           backgroundColor: '#18181a',
-          paddingVertical: 10,
-          paddingHorizontal: 20,
+          paddingVertical: 12,
+          paddingHorizontal: 16,
           borderRadius: 12,
           borderWidth: 1,
           borderColor: '#2c2c2e',
           alignItems: 'center',
           justifyContent: 'space-between',
           width: canvasW,
+          boxSizing: 'border-box',
         }}
       >
-        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
-          <Text style={{ color: '#8e8e93', fontSize: 13, marginRight: 4 }}>Layout:</Text>
+        <View style={{ flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', gap: 8, flex: 1 }}>
+          <Text style={{ color: '#8e8e93', fontSize: 13, marginRight: 2 }}>Layout:</Text>
           {Object.entries(state.layouts).map(([id, layout]) => (
             <View
               key={id}
               onClick={() => setSelectedLayoutId(id)}
               style={{
                 paddingVertical: 6,
-                paddingHorizontal: 14,
+                paddingHorizontal: 12,
                 borderRadius: 8,
                 backgroundColor: selectedLayoutId === id ? '#0a84ff' : '#28282a',
                 cursor: 'pointer',
@@ -351,12 +354,12 @@ export function TilingEditorOverlay() {
           ))}
         </View>
 
-        <View style={{ flexDirection: 'row', gap: 12 }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10, flexShrink: 0 }}>
           <View
             onClick={handleApply}
             style={{
               paddingVertical: 7,
-              paddingHorizontal: 20,
+              paddingHorizontal: 16,
               borderRadius: 8,
               backgroundColor: '#30d158',
               cursor: 'pointer',

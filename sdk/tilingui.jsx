@@ -155,6 +155,15 @@ export function TilingEditorOverlay() {
     setSelectedLayoutId(newId);
   };
 
+  const handleDeleteLayout = (e, id) => {
+    e.stopPropagation?.();
+    const allIds = Object.keys(state.layouts);
+    if (allIds.length <= 1) return;
+    deleteLayout(id);
+    const nextId = allIds.find((k) => k !== id) || '3-columns';
+    setSelectedLayoutId(nextId);
+  };
+
   const selectedZone = zones.find((z) => z.id === selectedZoneId);
 
   return (
@@ -314,52 +323,83 @@ export function TilingEditorOverlay() {
         )}
       </View>
 
-      {/* Bottom Footer Bar: Layout Switcher & Save (Dinâmico, Flexível e Auto-ajustável) */}
+      {/* Bottom Footer Bar: Layout Selector & Save Bar */}
       <View
         style={{
-          flexDirection: 'row',
-          flexWrap: 'wrap',
+          flexDirection: 'column',
           gap: 12,
           marginTop: 14,
           backgroundColor: '#18181a',
-          paddingVertical: 12,
-          paddingHorizontal: 16,
-          borderRadius: 12,
+          paddingVertical: 14,
+          paddingHorizontal: 18,
+          borderRadius: 14,
           borderWidth: 1,
           borderColor: '#2c2c2e',
-          alignItems: 'center',
-          justifyContent: 'space-between',
           width: canvasW,
           boxSizing: 'border-box',
         }}
       >
-        <View style={{ flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', gap: 8, flex: 1 }}>
-          <Text style={{ color: '#8e8e93', fontSize: 13, marginRight: 2 }}>Layout:</Text>
-          {Object.entries(state.layouts).map(([id, layout]) => (
-            <View
-              key={id}
-              onClick={() => setSelectedLayoutId(id)}
-              style={{
-                paddingVertical: 6,
-                paddingHorizontal: 12,
-                borderRadius: 8,
-                backgroundColor: selectedLayoutId === id ? '#0a84ff' : '#28282a',
-                cursor: 'pointer',
-              }}
-            >
-              <Text style={{ color: '#ffffff', fontSize: 13, fontWeight: selectedLayoutId === id ? '700' : '400' }}>
-                {layout.name}
-              </Text>
-            </View>
-          ))}
+        {/* Linha 1: Lista de Layouts com rolagem horizontal e opção de excluir */}
+        <View style={{ flexDirection: 'row', alignItems: 'center', width: '100%' }}>
+          <Text style={{ color: '#8e8e93', fontSize: 13, marginRight: 10, flexShrink: 0 }}>Layouts:</Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              gap: 8,
+              flex: 1,
+              overflowX: 'auto',
+              paddingVertical: 2,
+            }}
+          >
+            {Object.entries(state.layouts).map(([id, layout]) => {
+              const isSelected = selectedLayoutId === id;
+              const isDefault = id === '3-columns' || id === 'quarters' || id === 'focus-code';
+              return (
+                <View
+                  key={id}
+                  onClick={() => setSelectedLayoutId(id)}
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    gap: 6,
+                    paddingVertical: 6,
+                    paddingHorizontal: 12,
+                    borderRadius: 8,
+                    backgroundColor: isSelected ? '#0a84ff' : '#28282a',
+                    cursor: 'pointer',
+                    flexShrink: 0,
+                  }}
+                >
+                  <Text style={{ color: '#ffffff', fontSize: 13, fontWeight: isSelected ? '700' : '400' }}>
+                    {layout.name}
+                  </Text>
+                  {!isDefault && (
+                    <View
+                      onClick={(e) => handleDeleteLayout(e, id)}
+                      style={{
+                        paddingHorizontal: 4,
+                        paddingVertical: 1,
+                        borderRadius: 4,
+                        backgroundColor: isSelected ? 'rgba(0,0,0,0.3)' : 'rgba(255,255,255,0.1)',
+                      }}
+                    >
+                      <Text style={{ color: '#ff453a', fontSize: 11, fontWeight: '700' }}>✕</Text>
+                    </View>
+                  )}
+                </View>
+              );
+            })}
+          </View>
         </View>
 
-        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10, flexShrink: 0 }}>
+        {/* Linha 2: Barra de Ações (Salvar e Fechar) sempre limpa e alinhada à direita */}
+        <View style={{ flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', gap: 12, width: '100%', borderTopWidth: 1, borderTopColor: '#28282a', paddingTop: 10 }}>
           <View
             onClick={handleApply}
             style={{
-              paddingVertical: 7,
-              paddingHorizontal: 16,
+              paddingVertical: 8,
+              paddingHorizontal: 22,
               borderRadius: 8,
               backgroundColor: '#30d158',
               cursor: 'pointer',
@@ -371,8 +411,8 @@ export function TilingEditorOverlay() {
           <View
             onClick={toggleTilingEditor}
             style={{
-              paddingVertical: 7,
-              paddingHorizontal: 16,
+              paddingVertical: 8,
+              paddingHorizontal: 18,
               borderRadius: 8,
               backgroundColor: '#3a3a3c',
               cursor: 'pointer',
